@@ -47,7 +47,8 @@ const routes = [
   {
     path: '/admin',
     name: 'Admin-Login',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Login')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Login'),
+    meta: { hideNavigation: true }
   },
   {
     path: "/dash-home",

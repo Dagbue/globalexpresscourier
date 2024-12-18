@@ -341,12 +341,12 @@ tr{
 }
 
 th {
-  background-color: #F9FBFD;
+  background-color: #071333;
   padding: 10px;
   letter-spacing: 0.5px;
   font-weight: 500;
   font-size: 14px;
-  color: #667085;
+  color: #ffffff;
   text-align: center;
 }
 

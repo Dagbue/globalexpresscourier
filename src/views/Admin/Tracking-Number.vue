@@ -1,36 +1,42 @@
 <template>
   <dash-content>
-    <div class="fields-alpha"  >
 
+    <div class="alpha">
       <div class="body">
         <h2>Tracking Numbers</h2>
         <div class="row trans-mgt">
+
           <div class="form-group fg--search">
-            <button type="submit"><i class="fa fa-search"></i></button>
-            <input type="text" class="input" placeholder="Search User List..."/>
+            <button type="submit" ><i class="fa fa-search"></i></button>
+            <input  type="text" class="input" placeholder="Search Tracking Numbers. . ."  />
           </div>
-          <div class="row filter_group">
-            <!--          <div class="blue">Download transactions</div>-->
-            <div class="action-content">
-              <img src="@/assets/Filterslines.svg"  alt="Export"/>
-              <p>Filter</p>
-            </div>
+
+
+          <div class="pageNumbers">
+            <p>show</p>
+            <select v-model="itemsPerPage">
+              <option :value="10">10</option>
+              <option :value="25">25</option>
+              <option :value="50">50</option>
+              <option :value="100">100</option>
+            </select>
+            <p>entries</p>
           </div>
         </div>
       </div>
-
       <div class="section-5">
         <div class="empty-state" v-if="this.investments.length === 0">
           <img src="@/assets/empty.svg" alt="empty">
           <p class="empty-state-text-1">You have nothing to see</p>
-          <p class="empty-state-text-2">This is where your list of users will appear</p>
+          <p class="empty-state-text-2">This is where your list of Tracking Numbers will appear</p>
           <!--        <p class="empty-state-text-3">-->
           <!--          <i class='bx bx-plus' ></i>-->
           <!--          Transaction-->
           <!--        </p>-->
         </div>
 
-        <div class="table" v-if="this.investments.length >0">
+
+        <div class="table" v-if="this.investments.length >0" >
           <table>
             <tr>
               <th>Email</th>
@@ -41,17 +47,18 @@
               <th>Order Number</th>
             </tr>
 
-            <tbody v-for="child in paginatedItems" :key="child.key">
+
+
+            <tbody v-for="child in paginatedItems" :key="child.key" >
             <tr>
-              <td>{{child.email}}</td>
-              <td>{{child.freight}}</td>
-              <td>{{child.DepatureCity}}</td>
-              <td>{{child.DeliveryCity}}</td>
-              <td>{{child.TrackingNumber}}</td>
-              <td>{{child.OrderNumber}}</td>
+              <td data-label="Email" >{{child.email}}</td>
+              <td data-label="Freight Type" >{{child.freight}}</td>
+              <td data-label="Departure City" >{{child.DepatureCity}}</td>
+              <td data-label="Delivery City" >{{child.DeliveryCity}}</td>
+              <td data-label="Tracking Number" >{{child.TrackingNumber}}</td>
+              <td data-label="Order Number" >{{ child.OrderNumber}}</td>
             </tr>
             </tbody>
-
           </table>
 
           <div class="pagination">
@@ -66,8 +73,77 @@
         </div>
 
       </div>
-
     </div>
+
+
+<!--    <div class="fields-alpha"  >-->
+
+<!--      <div class="body">-->
+<!--        <h2>Tracking Numbers</h2>-->
+<!--        <div class="row trans-mgt">-->
+<!--          <div class="form-group fg&#45;&#45;search">-->
+<!--            <button type="submit"><i class="fa fa-search"></i></button>-->
+<!--            <input type="text" class="input" placeholder="Search User List..."/>-->
+<!--          </div>-->
+<!--          <div class="row filter_group">-->
+<!--            &lt;!&ndash;          <div class="blue">Download transactions</div>&ndash;&gt;-->
+<!--            <div class="action-content">-->
+<!--              <img src="@/assets/Filterslines.svg"  alt="Export"/>-->
+<!--              <p>Filter</p>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="section-5">-->
+<!--        <div class="empty-state" v-if="this.investments.length === 0">-->
+<!--          <img src="@/assets/empty.svg" alt="empty">-->
+<!--          <p class="empty-state-text-1">You have nothing to see</p>-->
+<!--          <p class="empty-state-text-2">This is where your list of users will appear</p>-->
+<!--          &lt;!&ndash;        <p class="empty-state-text-3">&ndash;&gt;-->
+<!--          &lt;!&ndash;          <i class='bx bx-plus' ></i>&ndash;&gt;-->
+<!--          &lt;!&ndash;          Transaction&ndash;&gt;-->
+<!--          &lt;!&ndash;        </p>&ndash;&gt;-->
+<!--        </div>-->
+
+<!--        <div class="table" v-if="this.investments.length >0">-->
+<!--          <table>-->
+<!--            <tr>-->
+<!--              <th>Email</th>-->
+<!--              <th>Freight Type</th>-->
+<!--              <th>Departure City</th>-->
+<!--              <th>Delivery City</th>-->
+<!--              <th>Tracking Number</th>-->
+<!--              <th>Order Number</th>-->
+<!--            </tr>-->
+
+<!--            <tbody v-for="child in paginatedItems" :key="child.key">-->
+<!--            <tr>-->
+<!--              <td>{{child.email}}</td>-->
+<!--              <td>{{child.freight}}</td>-->
+<!--              <td>{{child.DepatureCity}}</td>-->
+<!--              <td>{{child.DeliveryCity}}</td>-->
+<!--              <td>{{child.TrackingNumber}}</td>-->
+<!--              <td>{{child.OrderNumber}}</td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+
+<!--          </table>-->
+
+<!--          <div class="pagination">-->
+<!--            <button @click="previousPage" :disabled="currentPage === 1" class="previous">Previous</button>-->
+<!--            <div class="page-indicator">-->
+<!--              Page {{ currentPage }} of {{ totalPages }}-->
+<!--            </div>-->
+<!--            <button @click="nextPage" :disabled="currentPage === totalPages" class="previous">Next</button>-->
+<!--          </div>-->
+
+
+<!--        </div>-->
+
+<!--      </div>-->
+
+<!--    </div>-->
   </dash-content>
 </template>
 
@@ -82,7 +158,7 @@ export default {
     return {
       investments: [],
       currentPage: 1,
-      itemsPerPage: 7,
+      itemsPerPage: 10,
     }
   },
   computed:{
@@ -172,18 +248,6 @@ export default {
 </script>
 
 <style scoped>
-
-table, th, td {
-  border: 1px solid #E3EBF6;
-  padding: 2px;
-}
-
-tr td:first-child:before
-{
-  counter-increment: Serial;      /* Increment the Serial counter */
-  content:counter(Serial); /* Display the counter */
-}
-
 .body{
   padding: 32px;
 }
@@ -191,11 +255,20 @@ h2{
   font-weight: 700;
   font-size: 19px;
   line-height: 25px;
-  color: #353542;
+  color: #071333;
 }
 .row{
   display: flex;
-
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+}
+.pageNumbers{
+  display: flex;
+  gap: 5px;
+  align-content: center;
+  align-items: center;
+  padding-right: 2%;
 }
 .trans-mgt{
   margin-top: 17px;
@@ -211,7 +284,7 @@ h2{
   align-items: center;
   align-content: center;
   background-color: #FFFFFF;
-  border: 1px solid #D0D5DD;
+  border: 0.5px solid #3C4A57FF;
   font-size: 13px;
   padding:  6px 14px;
   border-radius: 5px;
@@ -230,7 +303,7 @@ h2{
 }
 
 .fg--search {
-  background: white;
+  background: none;
   position: relative;
   width: 400px;
   margin-left: 1%;
@@ -240,10 +313,14 @@ h2{
   padding: 10px;
   padding-left: 15px;
   display: block;
-  background: #FFFFFF;
-  border: 1px solid #D0D5DD;
+  background: #ffffff;
+  border: 0.5px solid #3C4A57FF;
   box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
   border-radius: 6px;
+}
+
+.fg--search input::placeholder {
+  color: #071333;
 }
 
 .fg--search button {
@@ -260,7 +337,7 @@ h2{
 }
 
 .fa-search{
-  color: #667085;
+  color: #071333;
   margin-right: 10px;
 }
 table {
@@ -277,13 +354,12 @@ tr{
 }
 
 th {
-
-  background-color: #F9FBFD;
-  padding: 10px;
+  background-color: #071333;
+  padding: 5px;
   letter-spacing: 0.5px;
   font-weight: 500;
-  font-size: 14px;
-  color: #667085;
+  font-size: 13px;
+  color: #ffffff;
   text-align: center;
 }
 
@@ -292,17 +368,16 @@ td {
   text-align: center;
   align-items: center;
   align-content: center;
-  padding: 15px 8px;
+  padding: 5px;
   /*letter-spacing: 1px;*/
-  color: #667085;
+  color: #0f171c;
   font-weight: 200;
-  font-size: 15px;
-
+  font-size: 14px;
 }
 
 .empty-state{
   text-align: center;
-  margin-top: 7%;
+  /*margin-top: 3%;*/
   margin-right: 8%;
 }
 
@@ -310,7 +385,7 @@ td {
   font-weight: 600;
   font-size: 18px;
   line-height: 20px;
-  color: #353542;
+  color: #071333;
   padding-top: 0.5%;
   padding-bottom: 0.5%;
 }
@@ -320,7 +395,7 @@ td {
   font-size: 14px;
   line-height: 20px;
   text-align: center;
-  color: #353542;
+  color: #071333;
   padding-bottom: 1.25%;
 }
 
@@ -355,8 +430,8 @@ td {
   gap: 8px;
   width: 88px;
   height: 36px;
-  background: #FFFFFF;
-  border: 1px solid #D0D5DD;
+  background: #ffffff;
+  border: 0.5px solid #3C4A57FF;
   box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
   border-radius: 4px;
   margin-right: 13px;
@@ -367,16 +442,16 @@ td {
 }
 
 .action-content p {
-  color: #667085;
+  color: #071333;
   font-size: 13px;
 }
 
 .fields-alpha-2{
-  background-color: #818a91;
+  background-color: #0f171c;
   padding-top: 10px;
   padding-bottom: 10px;
-  margin-left: 25%;
-  margin-right: 25%;
+  margin-left: 10%;
+  margin-right: 10%;
   border-radius: 5px;
   margin-top: 2%;
   display: flex;
@@ -386,28 +461,43 @@ td {
 }
 
 .fields-alpha-2-label{
-  color: #101828;
+  color: #ffffff;
 }
 
 .btn{
-  /*margin-top: 3%;*/
   color: #ffffff;
-  background-color: #D23535;
-  border: 1px solid #D23535;
-  padding: 10px 10px;
-  /*display: block;*/
-  /*margin-left: auto;*/
-  /*margin-right: auto;*/
+  background-color: #1f91f3;
+  border: 0.5px solid #1f91f3;
+  padding: 4px 5px;
+  font-size: 11px;
   text-align: center;
-  width: 18%;
+  width: 90px;
   border-radius: 5px;
   transition: all 0.3s ease-in;
 }
 
 .btn:hover{
-  background-color: #ffffff;
-  border: 1px solid #ffffff;
-  color: #D23535;
+  background-color: #1f91f3;
+  border: 1px solid #1f91f3;
+  color: #ffffff;
+}
+
+.btn-2{
+  color: #ffffff;
+  background-color: #fb483a !important;
+  border: 0.5px solid #fb483a;
+  padding: 4px 5px;
+  font-size: 11px;
+  text-align: center;
+  width: 90px;
+  border-radius: 5px;
+  transition: all 0.3s ease-in;
+}
+
+.btn-2:hover{
+  background-color: #fb483a;
+  border: 1px solid #fb483a;
+  color: #ffffff;
 }
 
 select {
@@ -416,7 +506,7 @@ select {
   /*padding-left: 15px;*/
   display: block;
   background: #FFFFFF;
-  border: 1px solid #D0D5DD;
+  border: 0.5px solid #3C4A57FF;
   box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
   border-radius: 5px;
 }
@@ -440,10 +530,10 @@ select {
   width: 100px;
   height: 30px;
   background: transparent;
-  color: #667085;
+  color: #071333;
   /*border: 1px solid #1570EF;*/
-  border: 1px solid #E3EBF6;
-  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+  border: 1px solid #3C4A57FF;
+  /*box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);*/
   border-radius: 4px;
 }
 
@@ -452,9 +542,100 @@ select {
 }
 
 .page-indicator{
-  color: #667085;
+  color: #071333;
   font-weight: 200;
   font-size: 13px;
 }
 
+.name-wrapper-body {
+  width: 12%;
+  height: 100%;
+  align-items: center;
+  padding-left: 16px;
+  display: flex;
+}
+.table-content {
+  height: 35px;
+  /*border-bottom: 1px solid rgba(0, 0, 0, .13);*/
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  display: flex;
+  align-content: center;
+}
+
+@media (max-width: 700px) {
+  .table{
+    margin-left: unset;
+  }
+  th {
+    display: none;
+  }
+
+  table, thead, tbody, td, tr {
+    display: block;
+  }
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr {
+    border: 0.5px solid #ccc;
+  }
+
+  td {
+    /* Each cell is now a full-width row */
+    border: none;
+    position: relative;
+    padding-left: 60%;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 15px;
+  }
+
+  td:before {
+    /* Use the data-label for the pseudo-element content */
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    padding-left: 5%;
+    font-weight: bold;
+  }
+}
+
+@media (max-width: 500px) {
+  .filter_group{
+    display: none;
+  }
+
+  .row{
+    display: block;
+  }
+
+  .pageNumbers{
+    padding-top: 10px;
+    padding-left: 2px;
+    padding-right: unset;
+  }
+
+  .fg--search {
+    margin-left: unset;
+  }
+
+  .body{
+    padding: 10px 20px 10px 5px;
+  }
+  h2{
+    padding-left: 10px;
+  }
+  .empty-state-container{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+  }
+}
 </style>
