@@ -142,16 +142,14 @@ export default {
   name: "RequestBody",
   data() {
     return {
+      freight: "",
+      Incoterms: "",
+      DepatureCity: "",
+      weight: "",
+      DeliveryCity: "",
+      Dimensions: "",
       email: "",
-      gender: "",
-      age: "",
-      country: "",
-      state: "",
-      firstName: "",
-      lastName: "",
       message: "",
-      lookingFor: "",
-      phoneNumber: "",
       loading: false,  // This will track whether the form is sending or not
     };
   },
@@ -186,16 +184,14 @@ export default {
       this.loading = true;  // Start loading
       try {
         await setDoc(doc(db, "RequestBody", this.email), {
-          firstName: this.firstName,
-          lastName: this.lastName,
+          freight: this.freight,
+          Incoterms: this.Incoterms,
+          DepatureCity: this.DepatureCity,
+          weight: this.weight,
+          DeliveryCity: this.DeliveryCity,
+          Dimensions: this.Dimensions,
           email: this.email,
-          gender: this.gender,
-          age: this.age,
-          country: this.country,
-          state: this.state,
           message: this.message,
-          lookingFor: this.lookingFor,
-          phoneNumber: this.phoneNumber,
           // createdAt: serverTimestamp(),
         }, { merge: true });
 
@@ -218,16 +214,14 @@ export default {
     },
 
     resetForm() {
-      this.firstName = '';
-      this.lastName = '';
+      this.freight = '';
+      this.Incoterms = '';
       this.email = '';
-      this.gender = '';
-      this.age = '';
-      this.country = '';
-      this.state = '';
+      this.DepatureCity = '';
+      this.weight = '';
+      this.DeliveryCity = '';
+      this.Dimensions = '';
       this.message = '';
-      this.phoneNumber = '';
-      this.lookingFor = '';
     },
 
   }
