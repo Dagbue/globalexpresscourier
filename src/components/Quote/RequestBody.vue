@@ -183,7 +183,7 @@ export default {
     async sendMessage() {
       this.loading = true;  // Start loading
       try {
-        await setDoc(doc(db, "RequestBody", this.email), {
+        await setDoc(doc(db, "Quotes", this.email), {
           freight: this.freight,
           Incoterms: this.Incoterms,
           DepatureCity: this.DepatureCity,
