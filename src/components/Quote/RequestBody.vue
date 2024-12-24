@@ -18,6 +18,7 @@
                 <div class="split">
                   <label class="label-input">Freight Type</label>
                   <select v-model="freight"
+                          required
                           aria-placeholder="Freight-Type"
                           aria-required="required">
                     <option value="">Freight Type</option>
@@ -30,6 +31,7 @@
                 <div class="split">
                   <label class="label-input">Service Pricing</label>
                   <select  v-model="Incoterms"
+                           required
                            aria-placeholder="Service Pricing"
                            aria-required="required">
                     <option value="">Service Pricing</option>
@@ -103,22 +105,9 @@
               </div>
 
                             <div class="split-2">
-                              <p class="auth2" @click="register">Get Quote</p>
+                              <button class="auth2" @click="register">Get Quote</button>
                             </div>
 
-<!--              <div class="split-2">-->
-<!--                <input type="checkbox" class="checkbox"/>-->
-<!--                <label class="check-box-label">You agree to our friendly privacy policy.</label>-->
-<!--              </div>-->
-
-<!--              <button class="button">-->
-<!--                Send Request-->
-<!--                <img src="@/assets/arrow-right-line.svg" alt="btn-image" class="btn-image" />-->
-<!--              </button>-->
-
-<!--              <base-button :loading="loading">-->
-<!--                Send Request-->
-<!--              </base-button>-->
             </form>
           </div>
 
@@ -136,7 +125,7 @@
 <script>
 import Swal from "sweetalert2";
 import {db} from "@/firebase/config";
-import {doc, setDoc,} from "firebase/firestore";
+import {doc, setDoc, serverTimestamp} from "firebase/firestore";
 
 export default {
   name: "RequestBody",
@@ -154,30 +143,6 @@ export default {
     };
   },
   methods: {
-    // async sendMessage() {
-    //
-    //   await setDoc(doc(db,"Requests", this.email), {
-    //     firstName: this.firstName,
-    //     lastName: this.lastName,
-    //     email: this.email,
-    //     gender: this.gender,
-    //     age: this.age,
-    //     country: this.country,
-    //     state: this.state,
-    //     message: this.message,
-    //     lookingFor: this.lookingFor,
-    //   }, {merge: true})
-    //       .then(() => {
-    //         console.log('saved')
-    //       })
-    //   await Swal.fire({
-    //     icon: 'success',
-    //     title: 'Success',
-    //     text: 'Request sent Successfully!',
-    //   });
-    //   this.resetForm()
-    //
-    // },
 
 
     async sendMessage() {
@@ -191,8 +156,8 @@ export default {
           DeliveryCity: this.DeliveryCity,
           Dimensions: this.Dimensions,
           email: this.email,
-          message: this.message,
-          // createdAt: serverTimestamp(),
+          Message: this.message,
+          createdAt: serverTimestamp(),
         }, { merge: true });
 
         await Swal.fire({
